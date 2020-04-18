@@ -1,4 +1,3 @@
-
 import os, datetime, json, requests
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -15,30 +14,17 @@ def say_hi():
     Today is {datetime.date.today()}
 
     """)
-
 say_hi()
 
-def geocode(address):
-    '''
-    Use geocode api to do forward geocoding. https://geocode.xyz/api
-    '''
-    res = requests.get(f"https://geocode.xyz/{address}&auth={os.getenv('GEOCODE')}",params={"json":1})
-    data = res.json()
-    print(res)
-    # Return as GeoJSON -> https://geojson.org/
-    return {
-        "type":"Point",
-        "coordinates": [float(data["longt"]), float(data["latt"])]
-            }
-
-coords = geocode('Medellin, Colombia')
+address = 'Tokyo, Japan'
+coords = enricher.geocode(address)
 
 # I have to make a function to melt Geopoints into 4SQ `ll` format
 # This will be the cluster points generated from the crunchbase dataset
 ll = coords
 ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
 #ll = '40.37417177212408,-3.7015647782170413' # Madrid
-#ll ='40.7243,-74.0018'
+#ll ='40.7243,-74.0018' # NYC
 
 
 # IMPORTANT: ♠ This will change later to a list of categories which will be funnelled and output as GeoPoints
@@ -70,7 +56,6 @@ category_set = flight_points
 category_set_cluster = cluster_request(category_set)
 
 # Exporter.py module
-
 def to_json(category_set):
     """
      ♠ OPTIMIZATION: refactor this for loop into a function

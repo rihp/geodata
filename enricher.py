@@ -6,7 +6,22 @@ import json
 import os
 
 
-
+def geocode(address):
+    '''
+    Use geocode api to do forward geocoding. https://geocode.xyz/api
+    INPUT:
+        - A string address
+    OUTPUT:
+        - A GeoPoint dict
+    '''
+    res = requests.get(f"https://geocode.xyz/{address}&auth={os.getenv('GEOCODE')}",params={"json":1})
+    data = res.json()
+    print(res)
+    # Return as GeoJSON -> https://geojson.org/
+    return {
+        "type":"Point",
+        "coordinates": [float(data["longt"]), float(data["latt"])]
+            }
 
 def getCategoryFrom4SQ(ll, venue_category, radius='4000', limit=10):
     """
