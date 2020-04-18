@@ -1,12 +1,10 @@
-from dotenv import load_dotenv
-load_dotenv()
 
-import os
-import enricher
-import datetime
-import json
-import requests
+import os, datetime, json, requests
+from dotenv import load_dotenv
 from pymongo import MongoClient
+import enricher
+
+load_dotenv()
 
 def say_hi():
     print(f"""
@@ -19,7 +17,6 @@ def say_hi():
     """)
 
 say_hi()
-print(datetime.datetime.today())
 
 def geocode(address):
     '''
@@ -34,9 +31,9 @@ def geocode(address):
         "coordinates": [float(data["longt"]), float(data["latt"])]
             }
 
-coords = geocode('Berlin, Germany')
+coords = geocode('Medellin, Colombia')
 
-# I have to make a function to melts Geopoints into 4SQ `ll` format
+# I have to make a function to melt Geopoints into 4SQ `ll` format
 # This will be the cluster points generated from the crunchbase dataset
 ll = coords
 ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
@@ -119,7 +116,6 @@ def GeopointFrom4SQ(venue):
                 ]
     }}
 
-
 def venues_to_GeoPoints(venues):
     """
     INPUT
@@ -132,14 +128,10 @@ def venues_to_GeoPoints(venues):
         #print(GeopointFrom4SQ(venue))            
         yield GeopointFrom4SQ(venue)
 
-
-# MongoClient upload
-client = MongoClient('mongodb://localhost/companies')
-db = client.get_database()
-
 # Exporter.py module
 # Output the Geopoints into `key`.json files
-
+client = MongoClient('mongodb://localhost/companies')
+db = client.get_database()
 def to_MongoDB(category_set, category_set_cluster):
     for key in category_set:
         
