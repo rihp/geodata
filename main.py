@@ -46,18 +46,6 @@ print(f"\n\n`flight_points_cluster`, raw variable:\n     {flight_points_cluster}
 
 # Print unwinded data
 print(" ~ Printing unwinded data")
-""" MUTED FOR IMPROVEMENTS
-for key in flight_points:
-    print(f" ~ Printing key: {key}")
-
-    for response in flight_points_cluster[key]:
-        print(f" ~ Printing response.json(): {response.contents()}")
-       # for venue in response:
-        #    print(f" ~ Printing venue: {venue}")
-           # print(venue['name'],'\n', venue['location'])
-"""
-
-
 # Loop the categories defined earlier as they keys to our `cluster` dictionary
 for key in flight_points:
     #print(f" ~ Printing type() of `flight_point_cluster[{key}]`: ")
@@ -65,6 +53,16 @@ for key in flight_points:
     #print(f"{type(response)}")
 
     #print(f" ~ Printing response.json():")
+
+
+    """
+    how to make the response a new json file?
+    """
+    import json
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(data,f, ensure_ascii=False, indent=4)
+
+        
     print(f"{response.json()}")
        # for venue in response:
         #    print(f" ~ Printing venue: {venue}")
