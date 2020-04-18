@@ -40,7 +40,8 @@ def geocode(address):
 # This will be the cluster points generated from the crunchbase dataset
 #ll = coords
 #ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
-ll = '40.37417177212408,-3.7015647782170413'
+#ll = '40.37417177212408,-3.7015647782170413' # Madrid
+ll ='40.7243,-74.0018'
 
 
 
@@ -99,8 +100,10 @@ for key in flight_points:
 #
 def GeopointFrom4SQ(venue):
     """
-    # Turn the FourSquare venues into an ITERATOR to be sent to MongoDB
-    # Returns the formatted `blob` correctly for future use of the data
+    INPUT: 
+     - A single FourSquare API venue
+    OUTPUT:
+     - A correctly formatted `blob` for future use and export downstream
     """
     loc = venue['location']
     return {'name':venue['name'],
@@ -114,23 +117,22 @@ def GeopointFrom4SQ(venue):
     }}
 
 
-
-# Turn the venues into an ITERATOR to be sent to MongoDB
 def venues_to_GeoPoints(venues):
+    """
+    INPUT
+     - Foursquare API venues `blob`
+    OUTPUT
+     - An ITERATOR with formatted dicts with key:value pairs, to be sent to MongoDB
+    """
     for venue in venues:
         print(venue)
-            # Asigning the values of the GeopointFrom4SQ() function to a new variable
-            #GeoPoint = GeopointFrom4SQ(venue)
-            #print(GeopointFrom4SQ(venue))            
+        #print(GeopointFrom4SQ(venue))            
         yield GeopointFrom4SQ(venue)
-        
 
 
 # MongoClient upload
 client = MongoClient('mongodb://localhost/companies')
 db = client.get_database()
-
-
 
 # Exporter.py module
 # Output the Geopoints into `key`.json files
