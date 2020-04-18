@@ -8,7 +8,7 @@ import os
 
 
 
-def getCategoryFrom4SQ(ll, venue_category, radius='2000', limit=5):
+def getCategoryFrom4SQ(ll, venue_category, radius='4000', limit=10):
     """
     A basic querying function that 
     INPUTS: 
@@ -71,3 +71,15 @@ def getCategoryFrom4SQ(ll, venue_category, radius='2000', limit=5):
     print(response.status_code) #https://http.cat/
 
     return response
+
+
+
+
+# INPUT:
+# - A pandas row from a dataframe with geo
+# OUTPUT:
+# - A Tupple with:
+#     -`GeoPoint` or `None`
+#     - A string with an error message
+
+# This function will process the values in that row, and return from it a
