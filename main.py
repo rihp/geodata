@@ -15,14 +15,11 @@ def parserFunction():
     parser.add_argument('lng', help="required latitude point to query. Type: float")
     parser.add_argument('--radius', help="Functionality under development; sets the radius to apply to the query.")
     parser.add_argument('--mailto', help="sends an email to the specified email.")
-    parser.add_argument('--address', help="")
+    parser.add_argument('--address', help="Not yet developed.")
     #parser.add_argument('--version', help="displays vesuvius' version", )
 
     # 03 -PARSE ARGS AND CATCH ERRORS, like wrong lengths or formats
     args = parser.parse_args()
-    latitude = float(args.lat)
-    longitude = float(args.lng)
-
     """
     if type(longitude) is not float:
         print(type(longitude))
@@ -33,7 +30,8 @@ def parserFunction():
     """
     return args
 args = parserFunction()
-
+latitude = float(args.lat)
+longitude = float(args.lng)
 
 print(f'{args.lat},{args.lng}')
 address = 'Maldives Islands'
@@ -44,8 +42,8 @@ address = 'Maldives Islands'
 #ll = coords
 #ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
 #ll = '40.37417177212408,-3.7015647782170413' # Madrid
-#ll ='40.7243,-74.0018' # NYC
-ll = f'{args.lat},{args.lng}' # use parsed args
+ll ='40.7243,-74.0018' # NYC
+#ll = f'{args.lat},{args.lng}' # use parsed args
 
 
 # STEP 2: Define categories to query
@@ -73,19 +71,6 @@ for category_set in relevant_categories:
     exporter.to_MongoDB(category_set, category_set_cluster)
 
 
-# Now exporting some of that data to a json
-client = MongoClient('mongodb://localhost/companies')
-db = client.companies
-collection = db.geo_data
-
-print(' Exporting the MongoDB collection to Output folder ~')
-cursor = collection.find({})
-file = open("OUTPUT/geo_data.json", "w")
-file.write('[')
-for document in cursor:
-    file.write(bson.json_util.dumps(document))
-    file.write(',')
-file.write(']')
-
+exporter.dump_array_of_dicts()
 
 print(' see you again soon ~')

@@ -125,18 +125,20 @@ def GeopointFrom4SQ(venue):
         
         """
         loc = venue['location']
-        return {'name':venue['name'],
-                'GeoPoint':{
-                    'type':'Point',
+        return {#'name':venue['name'],
+                'venue_location':{
                     'PointCategory':'4square location',      
-                    'coordinates':[
-                        loc['lng'],
-                        loc['lat']
-                    ]
-                },
+                    'GeoPoint':{
+                        'type':'Point',
+                        'coordinates':[
+                            loc['lng'],
+                            loc['lat']
+                        ]
+                    },
+                }
                 #'category':venue['categories'][0]['name'], 
-                'categories':venue['categories'],
-                'formattedAddress':venue['location']['formattedAddress']
+                #'categories':venue['categories'],
+                #'formattedAddress':venue['location']['formattedAddress']
         }
 
 def venues_to_GeoPoints(venues):
