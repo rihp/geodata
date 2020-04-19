@@ -45,9 +45,12 @@ def getCategoryFrom4SQ(ll, venue_category, radius=20000, limit=10):
         #    and save it in a separate categories.py that can also filter correct categories
         #    and also generate mixed categories (Meaning, getting 'international transport' 
         #    to include heliports and airports in just one search.)
-        relevant_categories = {'daycare':         '5744ccdfe4b0c0459246b4c7',
-                               
-                               'coffee shop':    '4bf58dd8d48988d1e0931735',
+        relevant_categories = {'daycare':       '5744ccdfe4b0c0459246b4c7',
+                               'preschool':     '52e81612bcbc57f1066b7a45',
+                               'elementary school':'4f4533804b9074f6e4fb0105',
+                               'middle school': '4f4533814b9074f6e4fb0106',
+                               'high school':   '4bf58dd8d48988d13d941735',
+                               'coffee shop':   '4bf58dd8d48988d1e0931735',
                                'corporate coffee shop':'5665c7b9498e7d8a4f2c0f06', # More similar categories
                                
                                'airport':        '4bf58dd8d48988d1ed931735',
@@ -56,12 +59,15 @@ def getCategoryFrom4SQ(ll, venue_category, radius=20000, limit=10):
                                'convention center':'4bf58dd8d48988d1ff931735',
                                'business center': '56aa371be4b08b9a8d573517',
                                
-                               'design studio':'4bf58dd8d48988d1f4941735',
+                               'design studio': '4bf58dd8d48988d1f4941735',
                                
                                'nightlife spot':'4d4b7105d754a06376d81259',
-                               'arcade':       '4bf58dd8d48988d1e1931735',
+                               'arcade':        '4bf58dd8d48988d1e1931735',
                                
-                               'volcano':      '5032848691d4c4b30a586d61',
+                               'tech startup':  '4bf58dd8d48988d125941735',
+                               'coworking space':'4bf58dd8d48988d174941735',
+
+                               'volcano':       '5032848691d4c4b30a586d61',
                               }
         
         venue_category_ID = relevant_categories[venue_category]
@@ -106,9 +112,6 @@ def cluster_request(ll, category_set):
         results[category] = getCategoryFrom4SQ(ll,category, radius=20000)
     return results
 
-
-
-
 def GeopointFrom4SQ(venue):
         """
           ##################################
@@ -122,6 +125,7 @@ def GeopointFrom4SQ(venue):
         - A single FourSquare API venue `blob`
         OUTPUT:
         - A correctly formatted `blob` for future use and export downstream
+            'venue_location': dict(PointCategory and GeoPoint)
         
         """
         loc = venue['location']

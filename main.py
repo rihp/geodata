@@ -42,19 +42,23 @@ address = 'Maldives Islands'
 #ll = coords
 #ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
 #ll = '40.37417177212408,-3.7015647782170413' # Madrid
-ll ='40.7243,-74.0018' # NYC
-#ll = f'{args.lat},{args.lng}' # use parsed args
+#ll ='40.7243,-74.0018' # NYC
+ll = f'{args.lat},{args.lng}' # use parsed args
 
 
 # STEP 2: Define categories to query
 #   INPUT : list of categories which will be funnelled
 #   OUTPUT:  output as GeoPoints (all cleaned, and loop again here.)
-kids_points = ['daycare']
+kids_points = ['daycare', 'preschool', 'elementary school', 'middle school', 'high school']
 party_points = ['convention center', 'nightlife spot']
 flight_points = ['airport', 'heliport']
+coffee_points = ['coffee shop', 'corporate coffee shop']
+business_points = ['tech startup', 'coworking space']
 
 relevant_categories = [kids_points,
-                    #party_points,
+                    party_points,
+                    business_points,
+                    coffee_points,
                     flight_points]
 
 
