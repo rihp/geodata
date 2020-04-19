@@ -107,6 +107,51 @@ def cluster_request(ll, category_set):
     return results
 
 
+
+
+def GeopointFrom4SQ(venue):
+        """
+          ##################################
+        #################################
+                
+            IMPORTANT STEP !!!
+            Formatting the output data
+        
+
+        INPUT: 
+        - A single FourSquare API venue `blob`
+        OUTPUT:
+        - A correctly formatted `blob` for future use and export downstream
+        
+        """
+        loc = venue['location']
+        return {'name':venue['name'],
+                'GeoPoint':{
+                    'type':'Point',
+                    'PointCategory':'4square location',      
+                    'coordinates':[
+                        loc['lng'],
+                        loc['lat']
+                    ]
+                },
+                #'category':venue['categories'][0]['name'], 
+                'categories':venue['categories'],
+                'formattedAddress':venue['location']['formattedAddress']
+        }
+
+def venues_to_GeoPoints(venues):
+    """
+    INPUT
+    - Foursquare API venues `blob`
+    OUTPUT
+    - An ITERATOR with formatted dicts with key:value pairs, to be sent to MongoDB
+    """
+    for venue in venues:
+        print(venue)
+        #print(GeopointFrom4SQ(venue))            
+        yield GeopointFrom4SQ(venue)
+
+
 # INPUT:
 # - A pandas row from a dataframe with geo
 # OUTPUT:
