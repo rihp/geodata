@@ -5,16 +5,17 @@ import requests
 import json
 import os
 
-
 def geocode(address):
     '''
     Use geocode api to do forward geocoding. https://geocode.xyz/api
     INPUT:
         - A string address
     OUTPUT:
-        - A GeoPoint dict
+        - A GeoPoint dict 
     '''
-    res = requests.get(f"https://geocode.xyz/{address}&auth={os.getenv('GEOCODE')}",params={"json":1})
+    #res = requests.get(f"https://geocode.xyz/{address}&auth={os.getenv('GEOCODE')}",params={"json":1})
+    res = requests.get(f"https://geocode.xyz/{address}",params={"json":1})
+
     data = res.json()
     print(res)
     # Return as GeoJSON -> https://geojson.org/
@@ -23,7 +24,9 @@ def geocode(address):
         "coordinates": [float(data["longt"]), float(data["latt"])]
             }
 
-def getCategoryFrom4SQ(ll, venue_category, radius='4000', limit=10):
+# Watch how to handle the radius of the query
+# call it only once for each category set.
+def getCategoryFrom4SQ(ll, venue_category, radius=20000, limit=10):
     """
     A basic querying function that 
     INPUTS: 
@@ -87,7 +90,21 @@ def getCategoryFrom4SQ(ll, venue_category, radius='4000', limit=10):
 
     return response
 
-
+def cluster_request(ll, category_set):
+    """
+    Define a function that makes multiple categorized requests to the API,
+    and receive each request's RESPONSES in an interesting format:
+      INPUT
+        - An set of Foursquare categories: https://developer.foursquare.com/docs/api-reference/venues/categories/
+      OUTPUT
+        - The len(array) of Input == len(dict.keys) of Output
+        - A Dictionary with each Foursquare Category as a key, and the resquests' response as its value
+        - The dict.values will be the response generated from the enricher.py module
+    """
+    results = {}
+    for category in category_set:
+        results[category] = getCategoryFrom4SQ(ll,category, radius=20000)
+    return results
 
 
 # INPUT:

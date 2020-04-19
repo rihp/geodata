@@ -1,22 +1,12 @@
 import os, datetime, json, requests
 from dotenv import load_dotenv
 from pymongo import MongoClient
-import enricher
+import enricher, presenter
 
 load_dotenv()
+presenter.say_hi()
 
-def say_hi():
-    print(f"""
-    -----------------------
-    Welcome to Vesuvius 
-    Version Alpha 001 
-    -----------------------
-    Today is {datetime.date.today()}
-
-    """)
-say_hi()
-
-address = 'Tokyo, Japan'
+address = 'Caracas, Venezuela'
 coords = enricher.geocode(address)
 
 # I have to make a function to melt Geopoints into 4SQ `ll` format
@@ -26,34 +16,16 @@ ll = f"{ll['coordinates'][1]},{ll['coordinates'][0]}"
 #ll = '40.37417177212408,-3.7015647782170413' # Madrid
 #ll ='40.7243,-74.0018' # NYC
 
-
 # IMPORTANT: ♠ This will change later to a list of categories which will be funnelled and output as GeoPoints
 # Assign the categories we will look for to sets
 kids_points = ['daycare', 'park']
 party_points = ['convention center', 'nightlife spot']
 flight_points = ['airport', 'heliport']
 
-# Define a function that makes multiple categorized requests to the API,
-# and receive each request's RESPONSES in an interesting format:
-#   OUTPUT will be a DICT
-#      - Each key of the output will be one of the keys from the input
-#      - The len(array) of Input == len(dict.keys) of Output
-#      - The dict.values will be the response generated from the enricher.py module
-def cluster_request(category_set):
-    """
-    INPUT
-        - An array of Foursquare categories: https://developer.foursquare.com/docs/api-reference/venues/categories/
-    OUTPUT
-        - A Dictionary with each Foursquare Category as a key, and the resquests' response as its value
-    """
-    results = {}
-    for category in category_set:
-        results[category] = enricher.getCategoryFrom4SQ(ll,category, radius=20000)
-    return results
 
 # Call the new function
 category_set = flight_points
-category_set_cluster = cluster_request(category_set)
+category_set_cluster = enricher.cluster_request(ll, category_set)
 
 # Exporter.py module
 def to_json(category_set):
@@ -74,7 +46,6 @@ def to_json(category_set):
         #print(f"{response.json()}")
         print(f"{type(response)}")
         #print(f" ~ Printing response.json():")
-
 to_json(category_set)
 
 ##################################
