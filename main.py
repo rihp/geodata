@@ -55,9 +55,9 @@ flight_points = ['airport', 'heliport']
 coffee_points = ['coffee shop', 'corporate coffee shop']
 business_points = ['tech startup', 'coworking space']
 
-relevant_categories = [kids_points,
-                    party_points,
-                    business_points,
+relevant_categories = [#kids_points,
+                    #party_points,
+                    #business_points,
                     coffee_points,
                     flight_points]
 

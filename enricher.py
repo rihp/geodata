@@ -129,9 +129,8 @@ def GeopointFrom4SQ(venue):
         
         """
         loc = venue['location']
-        return {#'name':venue['name'],
-                'venue_location':{
-                    'PointCategory':'4square location',      
+        return {'venue_location':{ 
+                    'name':venue['name'],     
                     'GeoPoint':{
                         'type':'Point',
                         'coordinates':[
@@ -139,10 +138,14 @@ def GeopointFrom4SQ(venue):
                             loc['lat']
                         ]
                     },
+                    'PointCategory':{"source":'4square location',
+                                    # commented this out, to change the representation of the categories. I want a string, not an array of arrays
+                                    # 'categories_names':[ venue['categories'][i]['name']    for i in range(len(venue['categories']))  ], 
+                                    'categories_names': venue['categories'][0]['name'], 
+                                    'categories_raw':venue['categories'],
+                                    'formattedAddress':venue['location']['formattedAddress'],
+                    }
                 }
-                #'category':venue['categories'][0]['name'], 
-                #'categories':venue['categories'],
-                #'formattedAddress':venue['location']['formattedAddress']
         }
 
 def venues_to_GeoPoints(venues):
