@@ -1,6 +1,7 @@
 # geodata
 Selecting the best place in the world to build the offices for a gaming start-up.
 
+![TOP LOCATION, at South San Francisco, California, USA]('OUTPUT/top_location.png')
 
 This project is structured so that it takes some company data, filters 'relevant companies', and extracts their office locations as a GeoPoint.
 
