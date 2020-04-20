@@ -5,11 +5,11 @@ import subprocess
 
 client = MongoClient('mongodb://localhost/companies')
 db = client.companies
-collection = db.geo_ref
+collection = db.geo_one
 cur = collection.find({})
 query = list(cur)
 
-for venue in query[:3]:
+for venue in query[0:25]:
     try: 
         coords = venue['venue_location']['GeoPoint']['coordinates']
         print(f"{coords[0]},{coords[1]}")

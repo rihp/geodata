@@ -44,7 +44,7 @@ def to_MongoDB(category_set, category_set_cluster):
         #GeoPoint = GeopointFrom4SQ(venue)
         if len(list(enricher.venues_to_GeoPoints(venues))) > 0:
             print(" ~ MONGODB - INSERTING MANY")
-            db.geo_ref.insert_many(list(enricher.venues_to_GeoPoints(venues)))
+            db.geo_one.insert_many(list(enricher.venues_to_GeoPoints(venues)))
         else:
             print('=== empty venues')
         #Export the places to a json
@@ -68,7 +68,7 @@ def dump_array_of_dicts():
     print(' ~ Now exporting the MongoDB to a json array of dicts')
     client = MongoClient('mongodb://localhost/companies')
     db = client.companies
-    collection = db.geo_ref
+    collection = db.geo_one
 
     print(' Exporting the MongoDB collection to Output folder ~')
     cursor = collection.find({})

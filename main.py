@@ -49,17 +49,19 @@ ll = f'{args.lat},{args.lng}' # use parsed args
 # STEP 2: Define categories to query
 #   INPUT : list of categories which will be funnelled
 #   OUTPUT:  output as GeoPoints (all cleaned, and loop again here.)
-kids_points = ['daycare', 'preschool', 'elementary school', 'middle school', 'high school']
-party_points = ['convention center', 'nightlife spot']
+kids_points = ['daycare', 'preschool', 'elementary school']
+party_points = ['arcade', 'nightlife spot']
 flight_points = ['airport', 'heliport']
 coffee_points = ['coffee shop', 'corporate coffee shop']
-business_points = ['tech startup', 'coworking space']
+business_points = ['tech startup', 'coworking space','convention center', 'business center']
+sport_points = ['basketball court']
 
-relevant_categories = [#kids_points,
-                    #party_points,
-                    #business_points,
+relevant_categories = [kids_points,
+                    party_points,
+                    business_points,
                     coffee_points,
-                    flight_points]
+                    flight_points,
+                    sport_points]
 
 
 # Call the new functions

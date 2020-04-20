@@ -50,6 +50,7 @@ def getCategoryFrom4SQ(ll, venue_category, radius=20000, limit=10):
                                'elementary school':'4f4533804b9074f6e4fb0105',
                                'middle school': '4f4533814b9074f6e4fb0106',
                                'high school':   '4bf58dd8d48988d13d941735',
+                               
                                'coffee shop':   '4bf58dd8d48988d1e0931735',
                                'corporate coffee shop':'5665c7b9498e7d8a4f2c0f06', # More similar categories
                                
@@ -66,8 +67,7 @@ def getCategoryFrom4SQ(ll, venue_category, radius=20000, limit=10):
                                
                                'tech startup':  '4bf58dd8d48988d125941735',
                                'coworking space':'4bf58dd8d48988d174941735',
-
-                               'volcano':       '5032848691d4c4b30a586d61',
+                               'basketball court': '4bf58dd8d48988d1e1941735'
                               }
         
         venue_category_ID = relevant_categories[venue_category]
